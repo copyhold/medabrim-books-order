@@ -1,0 +1,7 @@
+name = "testflight-mail-to-telegram"
+main = "worker.js"
+compatibility_date = "2023-02-02"
+
+node_compat = true
+
+[vars]
