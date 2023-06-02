@@ -23,7 +23,6 @@ export const parseMessage = message => {
   const lines = message.replaceAll(/<br>/g, "\n").split("\n")
   const parsedMessage = {
     books: [],
-    personalInformation: {}
   };
 
   for (let line of lines) {
@@ -33,19 +32,19 @@ export const parseMessage = message => {
     const trimmedValue = value.trim();
 
     if (trimmedKey === 'Name') {
-      parsedMessage.personalInformation.name = trimmedValue;
+      parsedMessage.name = trimmedValue;
     } else if (trimmedKey === 'Street') {
-      parsedMessage.personalInformation.street = trimmedValue;
+      parsedMessage.street = trimmedValue;
     } else if (trimmedKey === 'House Number') {
-      parsedMessage.personalInformation.houseNumber = parseInt(trimmedValue);
+      parsedMessage.houseNumber = parseInt(trimmedValue);
     } else if (trimmedKey === 'Apartment Number') {
-      parsedMessage.personalInformation.apartmentNumber = parseInt(trimmedValue);
+      parsedMessage.apartmentNumber = parseInt(trimmedValue);
     } else if (trimmedKey === 'City') {
-      parsedMessage.personalInformation.city = trimmedValue;
+      parsedMessage.city = trimmedValue;
     } else if (trimmedKey === 'Phone Number') {
-      parsedMessage.personalInformation.phoneNumber = trimmedValue;
+      parsedMessage.phoneNumber = trimmedValue;
     } else if (trimmedKey === 'Age Confirmation') {
-      parsedMessage.personalInformation.ageConfirmation = (trimmedValue.toLowerCase() === 'true');
+      parsedMessage.ageConfirmation = (trimmedValue.toLowerCase() === 'true');
     } else if (trimmedValue.toLowerCase() === 'true') { // true after the book name
       parsedMessage.books.push(trimmedKey)
     }
@@ -53,4 +52,3 @@ export const parseMessage = message => {
 
   return parsedMessage;
 };
-console.log(parseMessage(html))

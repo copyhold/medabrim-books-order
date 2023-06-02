@@ -1,4 +1,4 @@
-import { parseMessage } from './parse-message.js';
+import {createCickupTask} from './send-to-clickup.js';
 const PostalMime = require('postal-mime/dist/node').postalMime.default;
 
 async function streamToArrayBuffer(stream, streamSize) {
@@ -42,11 +42,11 @@ export default {
 
       console.log(parsedEmail)
 
-      const decoder = new TextDecoder()
-      console.log(decoder.decode(rawEmail))
+      // const decoder = new TextDecoder()
 
       try {
-        const parsedMessage = parseMessage(parsedEmail.html)
+        await createClickupTask(parsedEmail.html, env.CLICKUP_TOKEN)
+        console.log(parsedMessage)
         // await sendTGMessage(parsedMessage, env)
       } catch (error) {
         message.forward('novojilov.ilya@gmail.com')
