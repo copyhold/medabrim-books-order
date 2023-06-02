@@ -5,7 +5,7 @@ const html = `קיבלתם הודעה חדשה<br>Jesus life: true<br>New Testam
     '\n' +
     '<br/><img src="https://x9x26.mjt.lu/oo/AMYAABl_xSUAAAAAAAAAARHR9jkAAAAAjncAAAAAABhTEABkeaW0AmffjtFsScKxq3Z10rbRfAAA7QM/d6ba69ad/e.gif" height="1" width="1" alt="" border="0" style="height:1px;width:1px;border:0;"/>\n`;
 
-const createClickupTask = async (message, token) => {
+export const createClickupTask  = async (message, token) => {
   const order = parseMessage(message)
   console.log(order)
   const query = new URLSearchParams({
