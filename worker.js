@@ -47,7 +47,7 @@ export default {
 
       try {
         const parsedMessage = parseMessage(parsedEmail.html)
-        await sendTGMessage(parsedMessage, env)
+        // await sendTGMessage(parsedMessage, env)
       } catch (error) {
         message.forward('novojilov.ilya@gmail.com')
       }
