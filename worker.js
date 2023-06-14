@@ -37,13 +37,15 @@ export default {
 
     if (message.raw) {
       const rawEmail = await streamToArrayBuffer(message.raw, message.rawSize);
+      const PostalMime = require('postal-mime/dist/node').postalMime.default;
       const parser = new PostalMime();
       const parsedEmail = await parser.parse(rawEmail)
 
       // const decoder = new TextDecoder()
 
       try {
-        await createClickupTask(parsedEmail.html, env.CLICKUP_TOKEN)
+        const clickUpTask = await createClickupTask(parsedEmail.html, env.CLICKUP_TOKEN)
+        console.log('created task', clickUpTask)
         // await sendTGMessage(parsedMessage, env)
       } catch (error) {
         console.log(error)

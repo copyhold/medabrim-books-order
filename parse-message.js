@@ -2,30 +2,24 @@ const html = `קיבלתם הודעה חדשה<br>Jesus life: true<br>New Testam
     'If you believe this is a spam submission, please forward to <br><br><a href="https://webflow.com/dashboard/unsubscribeForm?t=9d1611c13a171d71632cc1a74a7c9f84c00fa695ae69f8c5b62cc127370aca2f&amp;s=5fa11abe42c4e96f4ed2984f&amp;sn=Medabrim&amp;e=zapier%40emailprocessing.site&amp;d=1685693874935">Unsubscribe</a> from notifications for this site.\n' +
     '\n' +
     '<br/><img src="https://x9x26.mjt.lu/oo/AMYAABl_xSUAAAAAAAAAARHR9jkAAAAAjncAAAAAABhTEABkeaW0AmffjtFsScKxq3Z10rbRfAAA7QM/d6ba69ad/e.gif" height="1" width="1" alt="" border="0" style="height:1px;width:1px;border:0;"/>\n`;
-const testmsg = `הודעה חדשה מאתר מדברים.
 
-קיבלתם הודעה חדשה
-Jesus life: true
-New Testament: false
-Supernatural: true
-Isaiah 53: false
-Lawyers Case: true
-BeforeYou (CD): false
-Name: מוריה
-Street: מעלה חסון
-House Number: 146
-Apartment Number: 16
-City: מעלות תרשיחא
-Phone Number: 0526545720
-Age Confirmation: true`;
+const processPhone = phone => {
+  const digits = phone.replace(/\D/g,'')
+
+  if (phone[0] === '+') return '+' + digits
+  if (digits.length < 10) return `+972-${digits}`
+
+  return `+${digits}`
+}
 
 export const parseMessage = message => {
-  const lines = message.replaceAll(/<br>/g, "\n").split("\n")
+  const order = message.replaceAll(/<br>/g, "\n")
   const parsedMessage = {
     books: [],
+    description: order.replace(/<\/?[^>]+(>|$)/g, "")
   };
 
-  for (let line of lines) {
+  for (let line of order.split("\n")) {
     const [key, value] = line.split(':');
     if (!key || !value) continue
     const trimmedKey = key.trim();
@@ -42,7 +36,8 @@ export const parseMessage = message => {
     } else if (trimmedKey === 'City') {
       parsedMessage.city = trimmedValue;
     } else if (trimmedKey === 'Phone Number') {
-      parsedMessage.phoneNumber = trimmedValue;
+      parsedMessage.originalPhoneNumber = trimmedValue;
+      parsedMessage.phoneNumber = processPhone(trimmedValue);
     } else if (trimmedKey === 'Age Confirmation') {
       parsedMessage.ageConfirmation = (trimmedValue.toLowerCase() === 'true');
     } else if (trimmedValue.toLowerCase() === 'true') { // true after the book name
@@ -52,3 +47,4 @@ export const parseMessage = message => {
 
   return parsedMessage;
 };
+

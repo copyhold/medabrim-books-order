@@ -24,7 +24,7 @@ export const createClickupTask  = async (message, token) => {
       },
       body: JSON.stringify({
         name: order.name,
-        description: message,
+        description: order.description,
         assignees: [60846743],// 37723939 - yoni
         space_id: '60890357',
         project_id: '126807274',
@@ -41,11 +41,11 @@ export const createClickupTask  = async (message, token) => {
 
           {
             id: 'fb15088b-428e-42b4-8395-c8c5c77191e6',
-            value: order.phoneNumber,
+            value: order.originalPhoneNumber,
           },
           {
             id: 'fefaf24e-2989-4303-9de4-aa64b30dca10',
-            value: '+972 54-976-6056'
+            value: order.phoneNumber
           },
           {
             id: 'd93377bb-3a3d-481c-a77d-7b943e10a195',
